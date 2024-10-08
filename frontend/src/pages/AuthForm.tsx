@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { BACKEND_URL } from "@/config";
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 export const description =
@@ -20,7 +22,16 @@ export function AuthForm({ type }: { type: string }) {
     email: "",
     password: "",
   });
-  console.log(postInputs);
+
+  const handleData = async () => {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/v1/user/${type}`,
+      postInputs
+    );
+    console.log(response.data.token);
+
+    localStorage.setItem("token", response.data.token);
+  };
 
   return (
     <div className="grid grid-cols-2 overflow-y-hidden">
@@ -97,7 +108,9 @@ export function AuthForm({ type }: { type: string }) {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full">Sign in</Button>
+            <Button onClick={handleData} className="w-full">
+              Sign in
+            </Button>
           </CardFooter>
         </Card>
       </div>
