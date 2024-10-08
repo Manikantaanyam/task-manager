@@ -56,8 +56,27 @@ userRouter.post("/login", async (c) => {
     return c.json({ msg: "Incorrect inputs" });
   }
 
-  const user1 = await prisma.user.findUnique({  body.email });
-  return c.text("mani");
+  try {
+    const user1 = await prisma.user.findFirst({
+      where: {
+        email: body.email,
+        password: body.password,
+      },
+    });
+
+    if (!user1) {
+      c.status(400);
+      return c.json({ msg: "user does not exist" });
+    }
+
+    const token = await sign({ id: user1.id }, c.env.JWT_SECRETKEY);
+    return c.json({ token });
+  } catch (e) {
+    c.status(500);
+    console.log(e);
+
+    return c.json({ msg: "internal server error" });
+  }
 });
 
 export { userRouter };
