@@ -1,6 +1,13 @@
 import { atom } from "recoil";
 
-export const dataAtom = atom({
+interface Data {
+  id: string;
+  title: string;
+  description: string;
+  created_At: string;
+}
+
+export const dataAtom = atom<Data[]>({
   key: "dataAtom",
   default: [],
 });

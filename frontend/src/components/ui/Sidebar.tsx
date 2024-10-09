@@ -1,4 +1,6 @@
-const Dashboard = () => {
+import Item from "@/components/ui/Item";
+
+const Sidebar = () => {
   return (
     <div>
       <div className="top-0 left-0   shadow-md bg-white  w-64 h-screen">
@@ -45,23 +47,4 @@ const Dashboard = () => {
   );
 };
 
-function Item({ name, id }: { name: string; id: string }) {
-  return (
-    <div className="flex  w-full gap-4 items-center hover:bg-slate-400 p-2">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="2.0"
-        stroke="currentColor"
-        className="size-6 "
-      >
-        <path stroke-linecap="round" stroke-linejoin="round" d={id} />
-      </svg>
-
-      <p className="text-xl font-semibold">{name}</p>
-    </div>
-  );
-}
-
-export default Dashboard;
+export default Sidebar;

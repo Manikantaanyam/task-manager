@@ -1,25 +1,40 @@
-import axios from "axios";
-import Dashboard from "./Dashboard";
-import Todo from "./Todo";
-import Modal from "./Modal";
-import { BACKEND_URL } from "@/config";
-import { useEffect, useState } from "react";
-import TodoForm from "./TodoForm";
-import { useRecoilValue } from "recoil";
+import Modal from "@/components/ui/Modal";
+import { useRecoilState } from "recoil";
 import { dataAtom } from "@/store/atoms/dataAtom";
-
+import { useEffect, useState } from "react";
+import Sidebar from "@/components/ui/Sidebar";
+import axios from "axios";
+import { BACKEND_URL } from "@/config";
+import Todo from "@/components/ui/Todo";
+import TodoForm1 from "@/components/ui/TodoForm1";
 const Dashboard1 = () => {
-  const data = useRecoilValue(dataAtom);
+  const [data, setData] = useRecoilState(dataAtom);
   const [showTodoForm, setShowTodoForm] = useState(false);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/v1/todo/bulk`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        });
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const toggleTodoForm = () => {
-    setShowTodoForm(!showTodoForm); // Toggle the visibility of TodoForm
+    setShowTodoForm(!showTodoForm);
   };
 
   return (
     <div className="flex h-screen">
       <div>
-        <Dashboard />
+        <Sidebar />
       </div>
       <div className="w-full p-4 gap-3">
         <div className="w-full flex justify-between mb-8">
@@ -33,18 +48,20 @@ const Dashboard1 = () => {
         </div>
         {showTodoForm && (
           <Modal onClose={toggleTodoForm}>
-            <TodoForm onClose={toggleTodoForm} />
+            <TodoForm1 />
           </Modal>
         )}
         <div className="grid grid-cols-3 gap-4 h-[calc(100%-70px)] overflow-scroll">
-          {data.map((i) => (
-            <Todo
-              id={i.id}
-              title={i.title}
-              description={i.description}
-              created_At={i.created_At}
-            />
-          ))}
+          {data.length > 0
+            ? data.map((i) => (
+                <Todo
+                  id={i.id}
+                  title={i.title}
+                  description={i.description}
+                  created_At={i.created_At}
+                />
+              ))
+            : null}
         </div>
       </div>
     </div>

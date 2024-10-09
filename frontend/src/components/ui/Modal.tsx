@@ -1,6 +1,12 @@
 import React from "react";
 
-const Modal = ({ children, onClose }) => {
+const Modal = ({
+  children,
+  onClose,
+}: {
+  children: React.ReactNode;
+  onClose: () => void;
+}) => {
   return (
     <div className="">
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -9,7 +15,7 @@ const Modal = ({ children, onClose }) => {
             onClick={onClose}
             className="absolute text-2xl pr-4 top-2 right-2 text-gray-500 hover:text-gray-700"
           >
-            &times; {/* Close icon */}
+            &times;
           </button>
           {children}
         </div>

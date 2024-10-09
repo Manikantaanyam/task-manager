@@ -2,11 +2,11 @@ import { BACKEND_URL } from "@/config";
 import axios from "axios";
 import { useState } from "react";
 
-const TodoForm = () => {
+const TodoForm1 = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const handleTodo = async () => {
-    const response = await axios.post(
+    await axios.post(
       `${BACKEND_URL}/api/v1/todo`,
       { title, description: desc },
       {
@@ -15,9 +15,8 @@ const TodoForm = () => {
         },
       }
     );
-
-    console.log(response.data);
   };
+
   return (
     <div className="flex w-full h-full justify-center items-center">
       <div className="flex h-screen flex-col justify-center">
@@ -49,4 +48,4 @@ const TodoForm = () => {
   );
 };
 
-export default TodoForm;
+export default TodoForm1;

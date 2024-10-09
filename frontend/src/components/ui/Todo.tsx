@@ -7,12 +7,12 @@ const Todo = ({
   description,
   created_At,
 }: {
-  id: string;
-  title: string;
-  description: string;
-  created_At: string;
+  id?: string;
+  title?: string;
+  description?: string;
+  created_At?: string;
 }) => {
-  const handleDelete = async (id) => {
+  const handleDelete = async (id?: string) => {
     await axios.delete(`${BACKEND_URL}/api/v1/todo/${id}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -28,11 +28,11 @@ const Todo = ({
       <div className="flex flex-col gap-2">
         <h3 className="text-md font-semibold">{title}</h3>
         <p className="text-sm font-light text-slate-900">
-          {description.slice(0, 30)}
+          {description?.slice(0, 30)}
         </p>
       </div>
       <div className="text-sm flex justify-between w-full absolute bottom-5">
-        <h3> {new Date(created_At).toLocaleString()}</h3>
+        <h3> {new Date(created_At ? created_At : "").toLocaleString()}</h3>
         <div className="flex mr-10 gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
