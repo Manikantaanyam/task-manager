@@ -11,30 +11,34 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BACKEND_URL } from "@/config";
 import axios from "axios";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { ChangeEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { setToken } from "@/components/ui/session";
 export const description =
   "A simple login form with email and password. The submit button says 'Sign in'.";
 
 export function AuthForm({ type }: { type: string }) {
+  const navigate = useNavigate();
   const [postInputs, setPostInputs] = useState({
     name: "",
     email: "",
     password: "",
   });
 
-  const handleData = async () => {
+  const handleData = async (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const response = await axios.post(
       `${BACKEND_URL}/api/v1/user/${type}`,
       postInputs
     );
     console.log(response.data.token);
 
-    sessionStorage.setItem("token", response.data.token);
+    setToken("token", response.data.token);
+    navigate("/dashboard");
   };
 
   return (
-    <div className="grid grid-cols-2 overflow-y-hidden">
+    <div className="grid grid-cols-1 overflow-y-hidden">
       <div className="h-screen flex justify-center items-center">
         <Card className="w-full max-w-sm">
           <CardHeader>
@@ -44,7 +48,7 @@ export function AuthForm({ type }: { type: string }) {
                 ? `Already have an account `
                 : `Didn't have an account `}
               <Link
-                to={type == "signup" ? "/login" : "/signup"}
+                to={type == "signup" ? "/login" : "/"}
                 className="underline"
               >
                 {type == "signup" ? "Login" : "signup"}
@@ -109,7 +113,7 @@ export function AuthForm({ type }: { type: string }) {
           </CardContent>
           <CardFooter>
             <Button onClick={handleData} className="w-full">
-              Sign in
+              {type === "signup" ? "signup" : "Login"}
             </Button>
           </CardFooter>
         </Card>

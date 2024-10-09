@@ -7,25 +7,38 @@ import axios from "axios";
 import { BACKEND_URL } from "@/config";
 import Todo from "@/components/ui/Todo";
 import TodoForm1 from "@/components/ui/TodoForm1";
+import { useFetch } from "@/hooks/useFetch";
+import { toast, ToastContainer } from "react-toastify";
+import { getToken } from "@/components/ui/session";
+
 const Dashboard1 = () => {
   const [data, setData] = useRecoilState(dataAtom);
   const [showTodoForm, setShowTodoForm] = useState(false);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const { fetchData } = useFetch();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${BACKEND_URL}/api/v1/todo/bulk`, {
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  const handleTodo = async () => {
+    try {
+      await axios.post(
+        `${BACKEND_URL}/api/v1/todo`,
+        { title, description: desc },
+        {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            Authorization: `Bearer ${getToken("token")}`,
           },
-        });
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data", error);
-      }
-    };
-    fetchData();
-  }, []);
+        }
+      );
+      toast.success("created a todo");
+      fetchData();
+    } catch (e) {
+      toast.error("Error while creating todo");
+    }
+  };
 
   const toggleTodoForm = () => {
     setShowTodoForm(!showTodoForm);
@@ -48,22 +61,32 @@ const Dashboard1 = () => {
         </div>
         {showTodoForm && (
           <Modal onClose={toggleTodoForm}>
-            <TodoForm1 />
+            <TodoForm1
+              onChange1={(e) => setDesc(e.target.value)}
+              onChange={(e) => setTitle(e.target.value)}
+              onClick={handleTodo}
+              buttonType="create"
+            />
           </Modal>
         )}
         <div className="grid grid-cols-3 gap-4 h-[calc(100%-70px)] overflow-scroll">
-          {data.length > 0
-            ? data.map((i) => (
-                <Todo
-                  id={i.id}
-                  title={i.title}
-                  description={i.description}
-                  created_At={i.created_At}
-                />
-              ))
-            : null}
+          {data.length == 0 ? (
+            data.map((i) => (
+              <Todo
+                id={i.id}
+                title={i.title}
+                description={i.description}
+                created_At={i.created_At}
+              />
+            ))
+          ) : (
+            <button className="flex justify-center items-center w-full ml-80 -mt-10">
+              You have no notes
+            </button>
+          )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

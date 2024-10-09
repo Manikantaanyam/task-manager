@@ -1,5 +1,5 @@
 import Item from "@/components/ui/Item";
-
+import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
     <div>
@@ -9,22 +9,24 @@ const Sidebar = () => {
             Task Manager
           </div>
           <div className="items pt-20 pl-4 space-y-2">
-            <Item
-              name="Home"
-              id="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-            />
+            <Link to="/dashboard">
+              <Item
+                name="Home"
+                id="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+              />
+            </Link>
             <Item
               name="Task"
               id="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
             />
-            <div className="flex  w-full items-center gap-3 hover:bg-slate-400 p-3">
+            <div className="flex cursor-pointer w-full items-center gap-3 hover:bg-slate-400 p-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="2.0"
                 stroke="currentColor"
-                className="size-6"
+                className="size-6 "
               >
                 <path
                   stroke-linecap="round"
