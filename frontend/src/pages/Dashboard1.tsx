@@ -1,7 +1,7 @@
 import Modal from "@/components/ui/Modal";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { dataAtom } from "@/store/atoms/dataAtom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Sidebar from "@/components/ui/Sidebar";
 import axios from "axios";
 import { BACKEND_URL } from "@/config";
@@ -12,15 +12,12 @@ import { toast, ToastContainer } from "react-toastify";
 import { getToken } from "@/components/ui/session";
 
 const Dashboard1 = () => {
-  const [data, setData] = useRecoilState(dataAtom);
+  const data = useRecoilValue(dataAtom);
   const [showTodoForm, setShowTodoForm] = useState(false);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const { fetchData } = useFetch();
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
 
   const handleTodo = async () => {
     try {

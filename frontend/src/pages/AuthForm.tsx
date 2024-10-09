@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BACKEND_URL } from "@/config";
 import axios from "axios";
-import { ChangeEvent, useState } from "react";
+import { MouseEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { setToken } from "@/components/ui/session";
 export const description =
@@ -25,7 +25,7 @@ export function AuthForm({ type }: { type: string }) {
     password: "",
   });
 
-  const handleData = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleData = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const response = await axios.post(
       `${BACKEND_URL}/api/v1/user/${type}`,
