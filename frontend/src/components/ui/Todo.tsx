@@ -4,7 +4,7 @@ import { useState } from "react";
 import Modal from "./Modal";
 import TodoForm1 from "./TodoForm1";
 import { useFetch } from "@/hooks/useFetch";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getToken } from "./session";
 
@@ -124,7 +124,6 @@ const Todo = ({
           )}
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

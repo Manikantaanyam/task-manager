@@ -9,6 +9,7 @@ import Todo from "@/components/ui/Todo";
 import TodoForm1 from "@/components/ui/TodoForm1";
 import { useFetch } from "@/hooks/useFetch";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { getToken } from "@/components/ui/session";
 
 const Dashboard1 = () => {
@@ -18,7 +19,8 @@ const Dashboard1 = () => {
   const [desc, setDesc] = useState("");
   const { fetchData } = useFetch();
 
-  const handleTodo = async () => {
+  const handleTodo = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault;
     try {
       await axios.post(
         `${BACKEND_URL}/api/v1/todo`,
@@ -81,8 +83,8 @@ const Dashboard1 = () => {
             </button>
           )}
         </div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
     </div>
   );
 };

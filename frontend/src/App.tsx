@@ -5,6 +5,7 @@ import Dashboard1 from "./pages/Dashboard1";
 import { useFetch } from "./hooks/useFetch";
 import { useEffect } from "react";
 import Protected from "./components/ui/Protected";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { fetchData } = useFetch();
@@ -16,6 +17,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <ToastContainer />
         <Routes>
           <Route path="/" element={<AuthForm type="signup" />} />
           <Route path="/login" element={<AuthForm type="login" />} />
