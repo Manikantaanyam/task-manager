@@ -18,7 +18,6 @@ const Dashboard1 = () => {
   const [desc, setDesc] = useState("");
   const { fetchData } = useFetch();
 
-
   const handleTodo = async () => {
     try {
       await axios.post(
@@ -67,7 +66,7 @@ const Dashboard1 = () => {
           </Modal>
         )}
         <div className="grid grid-cols-3 gap-4 h-[calc(100%-70px)] overflow-scroll">
-          {data.length == 0 ? (
+          {data.length > 0 ? (
             data.map((i) => (
               <Todo
                 id={i.id}
