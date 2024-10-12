@@ -19,7 +19,9 @@ const Dashboard1 = () => {
   const [desc, setDesc] = useState("");
   const { fetchData } = useFetch();
 
-  const handleTodo = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleTodo = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault;
     try {
       await axios.post(
