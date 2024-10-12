@@ -9,7 +9,7 @@ const TodoForm1 = ({
   title1?: string;
   description1?: string;
   buttonType: string;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>; 
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChange1: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
@@ -33,7 +33,7 @@ const TodoForm1 = ({
               value={description1}
               type="text"
               className="border rounded-full p-2 pl-4 border-gray-300"
-              placeholder="decription..."
+              placeholder="description..."
             />
           </div>
           <button
